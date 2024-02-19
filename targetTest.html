@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste JavaScript</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <h3>1- Soma</h3>
+    <div id="sum"></div>
+    
+    <h3>2- Questão lista Fibonacci</h3>
+    <div id="fibonacciQuestion"></div>
+    
+    <h3>3- Faturamento da distribuidora</h3>
+    <div id="distributorRevenue"></div>
+    
+    <h3>4- Faturamento por estado</h3>
+    <div id="revenueByState"></div>
+    
+    <h3>5- Inverta os caracteres</h3>
+    <div id="reverseCharacters"></div>
+
+<script>
+function sum() {
+    let INDEX = 13, SUM = 0, K = 0;
+    while (K < INDEX) {
+        K = K + 1;
+        SUM = SUM + K;
+    }
+    document.getElementById("sum").innerText = SUM;
+}
+
+function fibonacciQuestion() {
+    const fibonacci = (n) => {
+        let fibonacciList = [0, 1];
+        for (let i = 2; i < n; i++) {
+            fibonacciList.push(fibonacciList[i - 1] + fibonacciList[i - 2]);
+        }
+        return fibonacciList;
+    };
+
+    const n = 30, numberToVerify = 34;
+    let fibNumbers = fibonacci(n);
+    const foundNumber = fibNumbers.find((num) => num === numberToVerify);
+    const message = foundNumber !== undefined ? `O número ${foundNumber} está na sequência de Fibonacci` : `O número ${numberToVerify} não estava na sequência de Fibonacci`;
+    document.getElementById("fibonacciQuestion").innerText = message;
+}
+function distributorRevenue() {
+    var dailyRevenue = [
+    { "day": 1, "value": 22174.1664 },
+    { "day": 2, "value": 24537.6698 },
+    { "day": 3, "value": 26139.6134 },
+    { "day": 4, "value": 0.0 },
+    { "day": 5, "value": 0.0 },
+    { "day": 6, "value": 26742.6612 },
+    { "day": 7, "value": 0.0 },
+    { "day": 8, "value": 42889.2258 },
+    { "day": 9, "value": 46251.174 },
+    { "day": 10, "value": 11191.4722 },
+    { "day": 11, "value": 0.0 },
+    { "day": 12, "value": 0.0 },
+    { "day": 13, "value": 3847.4823 },
+    { "day": 14, "value": 373.7838 },
+    { "day": 15, "value": 2659.7563 },
+    { "day": 16, "value": 48924.2448 },
+    { "day": 17, "value": 18419.2614 },
+    { "day": 18, "value": 0.0 },
+    { "day": 19, "value": 0.0 },
+    { "day": 20, "value": 35240.1826 },
+    { "day": 21, "value": 43829.1667 },
+    { "day": 22, "value": 18235.6852 },
+    { "day": 23, "value": 4355.0662 },
+    { "day": 24, "value": 13327.1025 },
+    { "day": 25, "value": 0.0 },
+    { "day": 26, "value": 0.0 },
+    { "day": 27, "value": 25681.8318 },
+    { "day": 28, "value": 1718.1221 },
+    { "day": 29, "value": 13220.495 },
+    { "day": 30, "value": 8414.61 }
+];
+    function calculateRevenues(dailyRevenue) {
+        var nonZeroDailyRevenue = dailyRevenue.filter(entry => entry.value > 0);
+        var lowestRevenue = Math.min(...nonZeroDailyRevenue.map(item => item.value));
+        var highestRevenue = Math.max(...nonZeroDailyRevenue.map(item => item.value));
+        var sum = nonZeroDailyRevenue.reduce((total, entry) => total + entry.value, 0);
+        var averageRevenue = sum / nonZeroDailyRevenue.length;
+        var daysAboveAverage = nonZeroDailyRevenue.filter(entry => entry.value > averageRevenue).map(entry => entry.day);
+
+        let message = `A menor receita foi de R$${lowestRevenue.toFixed(2)}<br>` +
+            `A maior receita foi de R$${highestRevenue.toFixed(2)}<br>` +
+            `A receita média foi de R$${averageRevenue.toFixed(2)} e houve ${daysAboveAverage.length} dias em que a receita foi maior que a média mensal. Esses dias foram: ${daysAboveAverage.join(', ')}`;
+        document.getElementById("distributorRevenue").innerHTML = message;
+    }
+    calculateRevenues(dailyRevenue);
+} 
+
+function revenueByState() {
+    const stateValues = [
+      { state: "SP", revenue: 67836.43 },
+      { state: "RJ", revenue: 36678.66 },
+      { state: "MG", revenue: 29229.88 },
+      { state: "ES", revenue: 27165.48 },
+      { state: "Others", revenue: 19849.53 }
+    ];
+    function calculatePercentages(stateValues) {
+        const sum = stateValues.reduce((acc, curr) => acc + curr.revenue, 0);
+        const percentages = stateValues.map(stateValue => ({
+            state: stateValue.state,
+            percentage: ((stateValue.revenue / sum) * 100).toFixed(2)
+        }));
+
+        let message = percentages.map(({ state, percentage }) => `${state}: ${percentage}%`).join('<br>');
+        document.getElementById("revenueByState").innerHTML = message;
+    }
+    calculatePercentages(stateValues);
+}
+
+
+function reverseCharacters() {
+    function reverseString(str) {
+        return str.split('').reverse().join('');
+    }
+    const myString = "Pássaro";
+    const reversedString = reverseString(myString);
+    document.getElementById("reverseCharacters").innerText = `A palavra para ser invertida é ${myString}, resultado: ${reversedString}`;
+}
+
+
+sum();
+fibonacciQuestion();
+distributorRevenue();
+revenueByState();
+reverseCharacters();
+</script>
+
+</body>
+</html>
